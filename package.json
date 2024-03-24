@@ -1,0 +1,22 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node --watch index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "3.2.5"
+  },
+  "dependencies": {
+    "@types/ws": "^8.5.10",
+    "node-static": "^0.7.11",
+    "web3": "^4.6.0",
+    "ws": "^8.16.0"
+  }
+}
