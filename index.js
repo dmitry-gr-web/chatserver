@@ -1,13 +1,7 @@
 import { WebSocketServer } from 'ws'
-import { getTransactions, getTransactionInfo } from './transaction.js'
+import { getTransactionInfo } from './transaction.js'
 
 async function startServer() {
-  const txHashArray = await getTransactions()
-  //   const txHashArray = [
-  //     '0x1a3f7d07bf043962f8c7a4954b89dd3244f4aa6f0889cd86f2b1851c80f2632c',
-  //     '0x6af3ecf01ea618f9a2f07b65a66770f4f9aaee18cf57f3db6f769fe364fbfac0'
-  //   ]
-  console.log({ txHashArray })
   const rooms = {}
   const webSocketServer = new WebSocketServer({
     port: 8081
@@ -34,10 +28,12 @@ async function startServer() {
         }
       }
       if (action === 'sendMessage') {
-        if (txHashArray.some((x) => text.includes(x))) {
-          console.log('find Hash')
-          const hash = txHashArray.find((x) => text.includes(x))
-          const transactionInfo = await getTransactionInfo(hash)
+        const regex = /(0x)?[0-9a-fA-F]{64}/
+        const match = text.match(regex)
+        if (match) {
+          const txid = match[0]
+          console.log("find Hash", txid);
+          const transactionInfo = await getTransactionInfo(txid)
           message.transactionInfo = transactionInfo
         }
         for (const client of rooms[currentRoom]) {

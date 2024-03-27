@@ -5,16 +5,22 @@ const web3 = new Web3(
 )
 //Оставил ключ для Вас
 
+
+//список транзакций для тестирования
 export async function getTransactions() {
   try {
     const latestBlockNumber = await web3.eth.getBlockNumber()
-    const block = await web3.eth.getBlock(latestBlockNumber)
+    const block = await web3.eth.getBlock(latestBlockNumber)    
     const transactions = block.transactions
+    console.log({transactions})
     return transactions
   } catch (error) {
     console.error('Error:', error)
   }
 }
+// getTransactions()
+//список транзакций для тестирования
+
 
 export async function getTransactionInfo(txHash) {
   try {
