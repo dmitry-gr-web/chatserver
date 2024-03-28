@@ -5,14 +5,13 @@ const web3 = new Web3(
 )
 //Оставил ключ для Вас
 
-
 //список транзакций для тестирования
 export async function getTransactions() {
   try {
     const latestBlockNumber = await web3.eth.getBlockNumber()
-    const block = await web3.eth.getBlock(latestBlockNumber)    
+    const block = await web3.eth.getBlock(latestBlockNumber)
     const transactions = block.transactions
-    console.log({transactions})
+    console.log({ transactions })
     return transactions
   } catch (error) {
     console.error('Error:', error)
@@ -21,14 +20,19 @@ export async function getTransactions() {
 // getTransactions()
 //список транзакций для тестирования
 
-
 export async function getTransactionInfo(txHash) {
   try {
     const tx = await web3.eth.getTransaction(txHash)
     const block = await web3.eth.getBlock(tx.blockNumber)
-    const amountInEther = web3.utils.fromWei(tx.value, 'ether');
+    const amountInEther = web3.utils.fromWei(tx.value, 'ether')
     const date = new Date(Number(block.timestamp) * 1000)
-    return { date, walletFrom: tx.from, walletTo: tx.to, txid: tx.hash,values:amountInEther }
+    return {
+      date,
+      walletFrom: tx.from,
+      walletTo: tx.to,
+      txid: tx.hash,
+      values: amountInEther
+    }
   } catch (error) {
     console.error('Error:', error)
   }
