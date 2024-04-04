@@ -22,6 +22,10 @@ function startServer() {
           break
         case 'exitRoom':
           leaveRoom(action, ws, userName, room)
+          break
+        case 'getRooms':
+          getRooms(room)
+          break
         default:
           break
       }
@@ -71,6 +75,14 @@ function startServer() {
           userName: name,
           usersLength: rooms[room].participants.length
         })
+      )
+    })
+  }
+  function getRooms(room) {
+    const clients = rooms[room].participants
+    clients.forEach((client) => {
+      client.ws.send(
+        JSON.stringify(rooms)
       )
     })
   }
